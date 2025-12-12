@@ -23,6 +23,71 @@ class ClsBankClient : public ClsPerson {
                 vClientData[3], vClientData[4], vClientData[5], stod(vClientData[6]));
         }
 
+        static string _convertClientObjectToLine(ClsBankClient Client, string Seperator = "#//#") {
+            string stClientRecord = "";
+
+            stClientRecord += Client.getFirstName() + Seperator;
+            stClientRecord += Client.getLastName() + Seperator;
+            stClientRecord += Client.getEmail() + Seperator;
+            stClientRecord += Client.getPhone() + Seperator;
+            stClientRecord += Client.accountNumber() + Seperator;
+            stClientRecord += Client.getPinCode() + Seperator;
+            stClientRecord += to_string(Client.getAccountBalance());
+
+            return stClientRecord;
+
+        }
+
+        static  vector <ClsBankClient> _loadClientsDataFromFile() {
+            vector <ClsBankClient> vClients;
+
+            fstream MyFile;
+            MyFile.open("Clients.txt", ios::in);
+
+            if (MyFile.is_open()) {
+
+                string Line;
+
+                while (getline(MyFile, Line)) {
+                    ClsBankClient Client = _convertLinetoClientObject(Line);
+                    vClients.push_back(Client);
+                }
+
+                MyFile.close();
+            }
+
+            return vClients;
+
+        }
+
+        static void _saveCleintsDataToFile(vector <ClsBankClient> vClients) {
+            fstream MyFile;
+            MyFile.open("Clients.txt", ios::out);
+
+            string DataLine;
+
+            if (MyFile.is_open()) {
+                for (ClsBankClient C : vClients) {
+                    DataLine = _convertClientObjectToLine(C);
+                    MyFile << DataLine << endl;
+
+                }
+
+                MyFile.close();
+            }
+
+        }
+
+        void _addDataLineToFile(string  stDataLine) {
+            fstream MyFile;
+            MyFile.open("Clients.txt", ios::out | ios::app);
+
+            if (MyFile.is_open()) {
+                MyFile << stDataLine << endl;
+                MyFile.close();
+            }
+        }
+
         static ClsBankClient _getEmptyClientObject() {
             return ClsBankClient(EnMode::EmptyMode, "", "", "", "", "", "", 0);
         };

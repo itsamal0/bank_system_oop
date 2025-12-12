@@ -106,4 +106,9 @@ class ClsBankClient : public ClsPerson {
         static ClsBankClient find(string accountNumber, string pinCode) {
             return _internalFind(accountNumber, pinCode, true); 
         }
+
+        static bool isClientExist(string accountNumber) {
+            ClsBankClient Client1 = find(accountNumber);
+            return (!Client1.isEmpty());
+        }
 };

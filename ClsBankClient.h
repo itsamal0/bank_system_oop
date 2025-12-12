@@ -88,6 +88,20 @@ class ClsBankClient : public ClsPerson {
             }
         }
 
+        void _update() {
+            vector <ClsBankClient> _vClients;
+            _vClients = _loadClientsDataFromFile();
+
+            for (ClsBankClient& C : _vClients) {
+                if (C.accountNumber() == accountNumber()) {
+                    C = *this;
+                    break;
+                }
+            }
+
+            _saveCleintsDataToFile(_vClients);
+        }
+
         static ClsBankClient _getEmptyClientObject() {
             return ClsBankClient(EnMode::EmptyMode, "", "", "", "", "", "", 0);
         };
@@ -170,6 +184,23 @@ class ClsBankClient : public ClsPerson {
 
         static ClsBankClient find(string accountNumber, string pinCode) {
             return _internalFind(accountNumber, pinCode, true); 
+        }
+
+        enum enSaveResults { svFaildEmptyObject = 0, svSucceeded = 1 };
+
+        enSaveResults save() {
+            switch (_mode) {
+                case EnMode::EmptyMode:
+                    return enSaveResults::svFaildEmptyObject;
+
+                case EnMode::UpdateMode: {
+                    _update();
+                    return enSaveResults::svSucceeded;
+                }
+
+                default:
+                    return enSaveResults::svFaildEmptyObject;
+            }
         }
 
         static bool isClientExist(string accountNumber) {

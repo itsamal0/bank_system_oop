@@ -27,6 +27,34 @@ class ClsBankClient : public ClsPerson {
             return ClsBankClient(EnMode::EmptyMode, "", "", "", "", "", "", 0);
         };
 
+        static ClsBankClient _internalFind(string accountNumber, string pinCode, bool findByPinCode) {
+            fstream MyFile;
+            MyFile.open("Clients.txt", ios::in);
+
+            if (MyFile.is_open()) {
+                string Line;
+                while (getline(MyFile, Line)) {
+                    ClsBankClient Client = _convertLinetoClientObject(Line);
+
+                    if (findByPinCode) {
+                        if (Client.accountNumber() == accountNumber && Client.getPinCode() == pinCode) {
+                            MyFile.close();
+                            return Client;
+                        }
+
+                    } else {
+                        if (Client.accountNumber() == accountNumber) {
+                            MyFile.close();
+                            return Client;
+                        }
+                    }
+                }
+                MyFile.close();
+            }
+
+            return _getEmptyClientObject();
+        }
+
     public:
         ClsBankClient(EnMode mode, string firstName, string lastName, string email, string Phone,
             string accountNumber, string pinCode, float accountBalance) 
@@ -69,5 +97,13 @@ class ClsBankClient : public ClsPerson {
             cout << "\nPassword    : " << _pinCode;
             cout << "\nBalance     : " << _accountBalance;
             cout << "\n___________________\n";
+        }
+
+        static ClsBankClient find(string accountNumber) {
+            return _internalFind(accountNumber, "", false); 
+        }
+
+        static ClsBankClient find(string accountNumber, string pinCode) {
+            return _internalFind(accountNumber, pinCode, true); 
         }
 };

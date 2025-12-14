@@ -14,6 +14,7 @@ class ClsBankClient : public ClsPerson {
         string _accountNumber;
         string _pinCode;
         float _accountBalance;
+        bool _markedForDelete = false;
 
         static ClsBankClient _convertLinetoClientObject(string Line, string Seperator = "#//#") {
             vector<string> vClientData;
@@ -68,8 +69,10 @@ class ClsBankClient : public ClsPerson {
 
             if (MyFile.is_open()) {
                 for (ClsBankClient C : vClients) {
-                    DataLine = _convertClientObjectToLine(C);
-                    MyFile << DataLine << endl;
+                    if (C._markedForDelete == false) {
+                        DataLine = _convertClientObjectToLine(C);
+                        MyFile << DataLine << endl;
+                    }
 
                 }
 
@@ -219,6 +222,26 @@ class ClsBankClient : public ClsPerson {
                 default:
                     return enSaveResults::svFaildEmptyObject;
             }
+        }
+
+        
+        bool markForDelete() {
+            vector <ClsBankClient> _vClients;
+            _vClients = _loadClientsDataFromFile();
+
+            for (ClsBankClient& C : _vClients) {
+                if (C.accountNumber() == _accountNumber) {
+                    C._markedForDelete = true;
+                    break;
+                }
+
+            }
+
+            _saveCleintsDataToFile(_vClients);
+
+            *this = _getEmptyClientObject();
+
+            return true;
         }
 
         static bool isClientExist(string accountNumber) {

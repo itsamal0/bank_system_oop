@@ -59,8 +59,42 @@ void updateClient() {
     }
 }
 
+void addNewClient() {
+    string accountNumber = "";
+
+    cout << "\nPlease Enter Account Number: ";
+    accountNumber = ClsInputValidate::readString();
+
+    while (ClsBankClient::isClientExist(accountNumber)) {
+        cout << "\nAccount Number Is Already Used, Choose another one: ";
+        accountNumber = ClsInputValidate::readString();
+    }
+
+    ClsBankClient NewClient = ClsBankClient::getAddNewClientObject(accountNumber);
+
+
+    readClientInfo(NewClient);
+
+    ClsBankClient::enSaveResults saveResult;
+
+    saveResult = NewClient.save();
+
+    switch (saveResult) {
+        case  ClsBankClient::enSaveResults::svSucceeded: {
+            cout << "\nAccount Addeded Successfully :-)\n";
+            NewClient.print();
+            break;
+        }
+
+        case ClsBankClient::enSaveResults::svFaildEmptyObject: {
+            cout << "\nError account was not saved because it's Empty";
+            break;
+        }
+    }
+}
+
 int main() {
-    updateClient();
+    addNewClient();
     system("pause>0");
     return 0;
 }

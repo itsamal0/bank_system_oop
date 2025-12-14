@@ -9,7 +9,7 @@ using namespace std;
 
 class ClsBankClient : public ClsPerson {
     private:
-        enum EnMode {EmptyMode = 0, UpdateMode = 1};
+        enum EnMode {EmptyMode = 0, UpdateMode = 1, AddNewMode = 2};
         EnMode _mode;
         string _accountNumber;
         string _pinCode;
@@ -134,6 +134,10 @@ class ClsBankClient : public ClsPerson {
             return _getEmptyClientObject();
         }
 
+        void _addNew() {
+            _addDataLineToFile(_convertClientObjectToLine(*this));
+        }
+
     public:
         ClsBankClient(EnMode mode, string firstName, string lastName, string email, string Phone,
             string accountNumber, string pinCode, float accountBalance) 
@@ -186,7 +190,7 @@ class ClsBankClient : public ClsPerson {
             return _internalFind(accountNumber, pinCode, true); 
         }
 
-        enum enSaveResults { svFaildEmptyObject = 0, svSucceeded = 1 };
+        enum enSaveResults { svFaildEmptyObject = 0, svSucceeded = 1, svFaildAccountNumberExists = 2 };
 
         enSaveResults save() {
             switch (_mode) {
@@ -198,6 +202,20 @@ class ClsBankClient : public ClsPerson {
                     return enSaveResults::svSucceeded;
                 }
 
+                case EnMode::AddNewMode: {
+                    //This will add new record to file or database
+                    if (ClsBankClient::isClientExist(_accountNumber)) {
+                        return enSaveResults::svFaildAccountNumberExists;
+                    }
+
+                    else {
+                        _addNew();
+                        //We need to set the mode to update after add new
+                        _mode = EnMode::UpdateMode;
+                        return enSaveResults::svSucceeded;
+                    }
+                }
+
                 default:
                     return enSaveResults::svFaildEmptyObject;
             }
@@ -206,5 +224,9 @@ class ClsBankClient : public ClsPerson {
         static bool isClientExist(string accountNumber) {
             ClsBankClient Client1 = find(accountNumber);
             return (!Client1.isEmpty());
+        }
+
+        static ClsBankClient getAddNewClientObject(string accountNumber) {
+            return ClsBankClient(EnMode::AddNewMode, "", "", "", "", accountNumber, "", 0);
         }
 };

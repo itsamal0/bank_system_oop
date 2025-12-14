@@ -256,4 +256,14 @@ class ClsBankClient : public ClsPerson {
         static vector <ClsBankClient> getClientsList() {
             return _loadClientsDataFromFile();
         }
+  
+        static float getTotalBalances() {
+            vector <ClsBankClient> vClients = ClsBankClient::getClientsList();
+            double totalBalances = 0;
+
+            for (ClsBankClient Client : vClients)
+                totalBalances += Client.getAccountBalance();
+
+            return totalBalances;
+        }
 };

@@ -252,4 +252,8 @@ class ClsBankClient : public ClsPerson {
         static ClsBankClient getAddNewClientObject(string accountNumber) {
             return ClsBankClient(EnMode::AddNewMode, "", "", "", "", accountNumber, "", 0);
         }
+
+        static vector <ClsBankClient> getClientsList() {
+            return _loadClientsDataFromFile();
+        }
 };

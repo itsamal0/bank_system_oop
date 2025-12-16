@@ -3,6 +3,7 @@
 #include "ClsScreen.h"
 #include "ClsInputValidate.h"
 #include "ClsClientListScreen.h"
+#include "ClsAddNewClientScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -32,7 +33,7 @@ private:
     }
 
     static void _showAddNewClientsScreen() {
-        cout << "\nAdd New Client Screen Will be here...\n";
+        ClsAddNewClientScreen::showAddNewClientScreen();
     }
 
     static void _showDeleteClientScreen() {

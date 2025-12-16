@@ -175,15 +175,16 @@ class ClsBankClient : public ClsPerson {
             return _accountBalance;
         }
 
-        void print() {
-            cout << "\nClient Card:";
-            cout << "\n___________________";
-            ClsPerson::print();
-            cout << "\nAcc. Number : " << _accountNumber;
-            cout << "\nPassword    : " << _pinCode;
-            cout << "\nBalance     : " << _accountBalance;
-            cout << "\n___________________\n";
-        }
+        // No UI Related code iside object.
+        // void print() {
+        //     cout << "\nClient Card:";
+        //     cout << "\n___________________";
+        //     ClsPerson::print();
+        //     cout << "\nAcc. Number : " << _accountNumber;
+        //     cout << "\nPassword    : " << _pinCode;
+        //     cout << "\nBalance     : " << _accountBalance;
+        //     cout << "\n___________________\n";
+        // }
 
         static ClsBankClient find(string accountNumber) {
             return _internalFind(accountNumber, "", false); 

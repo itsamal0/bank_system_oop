@@ -273,4 +273,15 @@ class ClsBankClient : public ClsPerson {
             save();
         }
 
+        bool withdraw(double amount) {
+            if (amount > _accountBalance)
+                return false;
+            
+            else {
+                _accountBalance -= amount;
+                save();
+                return true;
+            }
+        }
+
 };

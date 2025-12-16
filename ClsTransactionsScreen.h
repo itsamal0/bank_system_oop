@@ -3,6 +3,7 @@
 #include "ClsScreen.h"
 #include "ClsInputValidate.h"
 #include "ClsDepositScreen.h"
+#include "ClsWithdrawtScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -24,7 +25,7 @@ private:
     }
 
     static void _showWithdrawScreen() {
-        cout << "\n Withdraw Screen will be here.\n";
+        ClsWithdrawScreen::showWithdrawScreen();
     }
 
     static void _showTotalBalancesScreen() {

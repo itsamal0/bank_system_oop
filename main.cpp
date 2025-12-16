@@ -12,7 +12,6 @@ void printClientRecordBalanceLine(ClsBankClient Client) {
     cout << "| " << setw(12) << left << Client.getAccountBalance();
 }
 
-
 void showtotalBalances() {
     vector <ClsBankClient> vClients = ClsBankClient::getClientsList();
 

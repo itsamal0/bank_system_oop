@@ -7,6 +7,7 @@
 #include "ClsDeleteClientScreen.h"
 #include "ClsUpdateClientScreen.h"
 #include "ClsFindClientScreen.h"
+#include "ClsTransactionsScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -52,7 +53,7 @@ private:
     }
 
     static void _showTransactionsMenue() {
-        cout << "\nTransactions Menue Will be here...\n";
+        ClsTransactionsScreen::showTransactionsMenue();
     }
 
     static void _showManageUsersMenue() {
@@ -103,6 +104,7 @@ private:
             case EnMainMenueOptions::ShowTransactionsMenue: {
                 system("cls");
                 _showTransactionsMenue();
+                _goBackToMainMenue();
                 break;
             }
 

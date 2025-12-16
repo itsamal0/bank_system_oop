@@ -267,4 +267,10 @@ class ClsBankClient : public ClsPerson {
 
             return totalBalances;
         }
+
+        void deposit(double amount) {
+            _accountBalance += amount;
+            save();
+        }
+
 };

@@ -1,8 +1,8 @@
 #include <iostream>
-#include "ClsMainScreen.h"
+#include "ClsLoginScreen.h"
 
 int main() {
-    ClsMainScreen::showMainMenue();
+    ClsLoginScreen::showLoginScreen();
     system("pause>0");
     return 0;
 }

@@ -2,7 +2,11 @@
 #include "ClsLoginScreen.h"
 
 int main() {
-    ClsLoginScreen::showLoginScreen();
+    
+    while (true) {
+        ClsLoginScreen::showLoginScreen();
+    }
+    
     system("pause>0");
     return 0;
 }

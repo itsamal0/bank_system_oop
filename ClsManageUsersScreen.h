@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ClsScreen.h"
 #include "ClsInputValidate.h"
+#include "ClsUsersListScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -25,7 +26,7 @@ private:
     }
 
     static void _showListUsersScreen() {
-        cout << "\nList Users Screen Will Be Here.\n";
+        ClsUsersListScreen::showUsersList();
     }
 
     static void _showAddNewUserScreen() {

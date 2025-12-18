@@ -3,6 +3,7 @@
 #include "ClsScreen.h"
 #include "ClsInputValidate.h"
 #include "ClsUsersListScreen.h"
+#include "ClsAddNewUserScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -30,7 +31,7 @@ private:
     }
 
     static void _showAddNewUserScreen() {
-        cout << "\nAdd New User Screen Will Be Here.\n";
+        ClsAddNewUserScreen::showAddNewUserScreen();
     }
 
     static void _showDeleteUserScreen() {

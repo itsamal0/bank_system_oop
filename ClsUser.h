@@ -128,6 +128,11 @@ private:
     }
 
 public:
+    enum EnPermissions {
+        eAll = -1, pListClients = 1, pAddNewClient = 2, pDeleteClient = 4,
+        pUpdateClients = 8, pFindClient = 16, pTranactions = 32, pManageUsers = 64
+    };
+
     ClsUser(EnMode mode, string firstName, string lastName,
         string email, string phone, string userName, string password,
         int permissions) :

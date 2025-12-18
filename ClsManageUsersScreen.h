@@ -92,6 +92,10 @@ private:
 
 public:
     static void showManageUsersMenu() {
+        if (!checkAccessRights(ClsUser::EnPermissions::pManageUsers)) {
+            return;
+        }
+
         system("cls");
         _drawScreenHeader("\t Manage Users Screen");
 

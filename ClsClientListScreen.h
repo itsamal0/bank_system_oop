@@ -16,6 +16,11 @@ private:
 
 public: 
     static void showClientsList() {
+
+        if (!checkAccessRights(ClsUser::EnPermissions::pListClients)) {
+            return;
+        }
+        
         vector <ClsBankClient> vClients = ClsBankClient::getClientsList();
 
         string title = "\t  Client List Screen";

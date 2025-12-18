@@ -233,4 +233,11 @@ public:
     static vector <ClsUser> getUsersList() {
         return _loadUsersDataFromFile();
     }
+
+    bool checkAccessPermission(EnPermissions Permission) {
+        if (this->_permissions == EnPermissions::eAll)
+            return true;
+
+        return ((Permission & this->_permissions) == Permission);
+    }
 };

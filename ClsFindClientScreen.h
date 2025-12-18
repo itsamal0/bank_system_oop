@@ -22,6 +22,11 @@ private:
 
     public: 
         static void showFindClientScreen() {
+
+            if (!checkAccessRights(ClsUser::EnPermissions::pFindClient)) {
+                return;
+            }
+
             _drawScreenHeader("\tFind Client Screen");
 
             string accountNumber;

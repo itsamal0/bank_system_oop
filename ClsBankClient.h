@@ -141,6 +141,31 @@ class ClsBankClient : public ClsPerson {
             _addDataLineToFile(_convertClientObjectToLine(*this));
         }
 
+        string _prepareTransferLogRecord(float amount, ClsBankClient destinationClient,
+                                        string userName, string seperator = "#//#") {
+            string transferLogRecord = "";
+            transferLogRecord += ClsDate::GetSystemDateTimeString() + seperator;
+            transferLogRecord += accountNumber() + seperator;
+            transferLogRecord += destinationClient.accountNumber() + seperator;
+            transferLogRecord += to_string(amount) + seperator;
+            transferLogRecord += to_string(getAccountBalance()) + seperator;
+            transferLogRecord += to_string(destinationClient.getAccountBalance()) + seperator;
+            transferLogRecord += userName;
+            return transferLogRecord;
+        }
+
+        void _registerTransferLog(float amount, ClsBankClient destinationClient, string userName) {
+            string stDataLine = _prepareTransferLogRecord(amount, destinationClient, userName);
+
+            fstream myFile;
+            myFile.open("TransferLog.txt", ios::out | ios::app);
+
+            if (myFile.is_open()) {
+                myFile << stDataLine << endl;
+                myFile.close();
+            }
+        }
+
     public:
         ClsBankClient(EnMode mode, string firstName, string lastName, string email, string Phone,
             string accountNumber, string pinCode, float accountBalance) 
@@ -284,13 +309,14 @@ class ClsBankClient : public ClsPerson {
             }
         }
 
-        bool transfer(float amount, ClsBankClient& DestinationClient) {
+        bool transfer(float amount, ClsBankClient& DestinationClient, string username) {
             if (amount > getAccountBalance()) {
                 return false;
             }
         
             withdraw(amount);
             DestinationClient.deposit(amount);
+            _registerTransferLog(amount, DestinationClient, username);
             return true;
         }
 

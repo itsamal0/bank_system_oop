@@ -284,4 +284,14 @@ class ClsBankClient : public ClsPerson {
             }
         }
 
+        bool transfer(float amount, ClsBankClient& DestinationClient) {
+            if (amount > getAccountBalance()) {
+                return false;
+            }
+        
+            withdraw(amount);
+            DestinationClient.deposit(amount);
+            return true;
+        }
+
 };

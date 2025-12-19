@@ -17,8 +17,8 @@ private:
     };
 
     static short readTransactionsMenueOption() {
-        cout << setw(37) << left << "" << "Choose what do you want to do? [1 to 4]? ";
-        short choice = ClsInputValidate::readNumberBetween<short>(1, 4, "Enter Number between 1 to 4? ");
+        cout << setw(37) << left << "" << "Choose what do you want to do? [1 to 5]? ";
+        short choice = ClsInputValidate::readNumberBetween<short>(1, 5, "Enter Number between 1 to 5? ");
         return choice;
     }
 

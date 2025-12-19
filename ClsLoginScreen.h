@@ -38,6 +38,7 @@ private:
 
         } while (loginFaild);
 
+        CurrentUser.RegisterLogIn();
         ClsMainScreen::showMainMenue();
         return true;
     }

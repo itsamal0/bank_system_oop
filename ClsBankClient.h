@@ -8,6 +8,17 @@
 using namespace std;
 
 class ClsBankClient : public ClsPerson {
+    public:
+        struct StTrnsferLogRecord {
+            string dateTime;
+            string sourceAccountNumber;
+            string destinationAccountNumber;
+            float amount;
+            float srcBalanceAfter;
+            float destBalanceAfter;
+            string userName;
+        };
+
     private:
         enum EnMode {EmptyMode = 0, UpdateMode = 1, AddNewMode = 2};
         EnMode _mode;
@@ -22,6 +33,21 @@ class ClsBankClient : public ClsPerson {
 
             return ClsBankClient(EnMode::UpdateMode, vClientData[0], vClientData[1], vClientData[2],
                 vClientData[3], vClientData[4], vClientData[5], stod(vClientData[6]));
+        }
+
+        static StTrnsferLogRecord _convertTransferLogLineToRecord(string line, string seperator = "#//#") {
+            StTrnsferLogRecord transferLogRecord;
+            vector <string> vTransferLogDataLine = ClsString::splitString(line, seperator);
+            
+            transferLogRecord.dateTime = vTransferLogDataLine[0];
+            transferLogRecord.sourceAccountNumber = vTransferLogDataLine[1];
+            transferLogRecord.destinationAccountNumber = vTransferLogDataLine[2];
+            transferLogRecord.amount = stod(vTransferLogDataLine[3]);
+            transferLogRecord.srcBalanceAfter = stod(vTransferLogDataLine[4]);
+            transferLogRecord.destBalanceAfter = stod(vTransferLogDataLine[5]);
+            transferLogRecord.userName = vTransferLogDataLine[6];
+
+            return transferLogRecord;
         }
 
         static string _convertClientObjectToLine(ClsBankClient Client, string Seperator = "#//#") {
@@ -167,6 +193,18 @@ class ClsBankClient : public ClsPerson {
         }
 
     public:
+        struct stTrnsferLogRecord
+    {
+        string DateTime;
+        string SourceAccountNumber;
+        string DestinationAccountNumber;
+        float Amount;
+        float srcBalanceAfter;
+        float destBalanceAfter;
+        string UserName;
+
+    };
+
         ClsBankClient(EnMode mode, string firstName, string lastName, string email, string Phone,
             string accountNumber, string pinCode, float accountBalance) 
             : ClsPerson(firstName, lastName, email, Phone) {
@@ -318,6 +356,27 @@ class ClsBankClient : public ClsPerson {
             DestinationClient.deposit(amount);
             _registerTransferLog(amount, DestinationClient, username);
             return true;
+        }
+
+        static  vector <StTrnsferLogRecord> getTransfersLogList() {
+            vector <StTrnsferLogRecord> vTransferLogRecord;
+
+            fstream MyFile;
+            MyFile.open("TransfersLog.txt", ios::in);
+
+            if (MyFile.is_open()) {
+                string Line;
+                StTrnsferLogRecord TransferRecord;
+
+                while (getline(MyFile, Line)) {
+                    TransferRecord = _convertTransferLogLineToRecord(Line);
+                    vTransferLogRecord.push_back(TransferRecord);
+                }
+
+                MyFile.close();
+            }
+
+            return vTransferLogRecord;
         }
 
 };

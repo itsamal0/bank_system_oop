@@ -116,14 +116,14 @@ public:
         }
     }
 
-    static string encryptText(string txt, short key) {
+    static string encryptText(string txt, short key = 10) {
         for (int i = 0; i < txt.length(); i++) {
             txt[i] = char((int)txt[i] + key);
         }
         return txt;
     }
 
-    static string decryptText(string txt, short key) {
+    static string decryptText(string txt, short key = 10) {
         for (int i = 0; i < txt.length(); i++) {
             txt[i] = char((int)txt[i] - key);
         }

@@ -164,4 +164,14 @@ public:
     static vector<ClsCurrency> getCurrenciesList() {
         return _loadCurrenciesDataFromFile();
     }
+
+    float convertTo(float amount, ClsCurrency targetCurrency) {
+        float amountInUSD = amount / rate();
+
+        if (targetCurrency.currencyCode() == "USD") {
+            return amountInUSD;
+        }
+        
+        return amountInUSD * targetCurrency.rate();
+    }
 };

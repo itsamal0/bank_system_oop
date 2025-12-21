@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ClsScreen.h"
 #include "ClsInputValidate.h"
+#include "ClsCurrenciesListScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -26,7 +27,7 @@ private:
     }
 
     static void _showCurrenciesListScreen() {
-        cout << "\nCurrencies List Screen Will Be Here.\n";
+        ClsCurrenciesListScreen::showCurrenciesListScreen();
     }
 
     static void _showFindCurrencyScreen() {

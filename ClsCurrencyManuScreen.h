@@ -3,6 +3,7 @@
 #include "ClsScreen.h"
 #include "ClsInputValidate.h"
 #include "ClsCurrenciesListScreen.h"
+#include "ClsFindCurrencyScreen.h"
 #include <iomanip>
 using namespace std;
 
@@ -31,7 +32,7 @@ private:
     }
 
     static void _showFindCurrencyScreen() {
-        cout << "\nFind Currency Screen Will Be Here.\n";
+        ClsFindCurrencyScreen::showFindCurrencyScreen();
     }
 
     static void _showUpdateCurrencyRateScreen() {

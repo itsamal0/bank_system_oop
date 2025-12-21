@@ -1,4 +1,4 @@
 #pragma once
-#include "ClsUser.h"
+#include "Core\ClsUser.h"
 
 ClsUser CurrentUser = ClsUser::find("", "");

@@ -10,7 +10,7 @@
 #include "ClsTransactionsScreen.h"
 #include "ClsManageUsersScreen.h"
 #include "ClsLoginRegisterScreen.h"
-#include "ClsCurrencyManuScreen.h"
+#include "ClsCurrencyMenuScreen.h"
 #include "Global.h"
 #include <iomanip>
 using namespace std;
